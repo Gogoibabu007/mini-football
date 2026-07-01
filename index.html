@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gonaldo | Premium Finger Football</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Play Gonaldo - the ultimate 2D physics finger football game in your browser. Choose between Local PvP or challenge the computer. Features drag-to-aim flick controls, realistic collisions, goal celebrations, and retro audio.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <!-- Ambient background blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-icon">
+          <i data-lucide="trophy"></i>
+        </div>
+        <div class="logo-text">
+          <h1>Gonaldo</h1>
+          <p>Finger Football Physics</p>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <!-- Sound Toggle -->
+        <button id="sound-toggle" class="btn-icon" aria-label="Toggle Sound" title="Toggle Sound">
+          <i data-lucide="volume-2" class="volume-on-icon"></i>
+          <i data-lucide="volume-x" class="volume-off-icon" style="display: none;"></i>
+        </button>
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme" title="Toggle Theme">
+          <i data-lucide="sun" class="sun-icon"></i>
+          <i data-lucide="moon" class="moon-icon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN APP CONTENT -->
+    <main class="app-content">
+      <!-- SETUP SCREEN -->
+      <section id="setup-screen" class="setup-panel">
+        <div class="card glass-card setup-card">
+          <div class="card-header">
+            <h2>Match Settings</h2>
+            <p class="subtitle">Customize teams and field to kickoff</p>
+          </div>
+          <div class="card-body">
+            <!-- Game Mode -->
+            <div class="form-group">
+              <label>Game Mode</label>
+              <div class="toggle-buttons-group">
+                <button type="button" class="btn-toggle active" id="mode-ai" data-mode="ai">
+                  <i data-lucide="cpu"></i>
+                  <span>vs Computer AI</span>
+                </button>
+                <button type="button" class="btn-toggle" id="mode-pvp" data-mode="pvp">
+                  <i data-lucide="users"></i>
+                  <span>Local PvP</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Score Limit -->
+            <div class="form-group">
+              <label>Goal Limit</label>
+              <div class="toggle-buttons-group select-3">
+                <button type="button" class="btn-toggle active" data-limit="3">
+                  <span>First to 3</span>
+                </button>
+                <button type="button" class="btn-toggle" data-limit="5">
+                  <span>First to 5</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Team Setup Details -->
+            <div class="teams-inputs-container">
+              <!-- Team A -->
+              <div class="team-setup-card" id="team-a-setup">
+                <div class="team-marker-preview" style="--team-color: hsl(350, 85%, 55%);" id="team-a-color-preview">A</div>
+                <div class="team-details">
+                  <label for="team-a-name">Team A (Home)</label>
+                  <input type="text" id="team-a-name" value="Gonaldo FC" placeholder="Enter Name" maxlength="12">
+                  <div class="color-options-row">
+                    <button type="button" class="btn-color active" data-color="hsl(350, 85%, 55%)" style="background-color: hsl(350, 85%, 55%);" title="Red"></button>
+                    <button type="button" class="btn-color" data-color="hsl(200, 85%, 55%)" style="background-color: hsl(200, 85%, 55%);" title="Blue"></button>
+                    <button type="button" class="btn-color" data-color="hsl(145, 75%, 48%)" style="background-color: hsl(145, 75%, 48%);" title="Green"></button>
+                    <button type="button" class="btn-color" data-color="hsl(45, 90%, 52%)" style="background-color: hsl(45, 90%, 52%);" title="Gold"></button>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Team B -->
+              <div class="team-setup-card" id="team-b-setup">
+                <div class="team-marker-preview" style="--team-color: hsl(200, 85%, 55%);" id="team-b-color-preview">B</div>
+                <div class="team-details">
+                  <label for="team-b-name" id="team-b-label">Team B (Computer)</label>
+                  <input type="text" id="team-b-name" value="Robo Madrid" placeholder="Enter Name" maxlength="12">
+                  <div class="color-options-row">
+                    <button type="button" class="btn-color" data-color="hsl(350, 85%, 55%)" style="background-color: hsl(350, 85%, 55%);" title="Red"></button>
+                    <button type="button" class="btn-color active" data-color="hsl(200, 85%, 55%)" style="background-color: hsl(200, 85%, 55%);" title="Blue"></button>
+                    <button type="button" class="btn-color" data-color="hsl(145, 75%, 48%)" style="background-color: hsl(145, 75%, 48%);" title="Green"></button>
+                    <button type="button" class="btn-color" data-color="hsl(45, 90%, 52%)" style="background-color: hsl(45, 90%, 52%);" title="Gold"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pitch Theme -->
+            <div class="form-group">
+              <label>Pitch Aesthetic</label>
+              <div class="pitch-picker-group">
+                <button type="button" class="pitch-option active" data-pitch="neon-green" style="--pitch-c1: hsl(145, 60%, 15%); --pitch-c2: hsl(145, 65%, 22%);" title="Forest Neon"></button>
+                <button type="button" class="pitch-option" data-pitch="midnight-blue" style="--pitch-c1: hsl(215, 60%, 12%); --pitch-c2: hsl(220, 65%, 18%);" title="Midnight Pitch"></button>
+                <button type="button" class="pitch-option" data-pitch="cyber-grid" style="--pitch-c1: hsl(320, 50%, 10%); --pitch-c2: hsl(320, 55%, 15%);" title="Cyber Grid"></button>
+              </div>
+            </div>
+
+            <button type="button" id="start-match-btn" class="btn-primary">
+              <i data-lucide="play"></i>
+              <span>Kick Off</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- GAME SCREEN (Hidden by default) -->
+      <section id="game-screen" class="game-panel hidden">
+        <!-- Dashboard Scoreboard -->
+        <div class="scoreboard-bar glass-card">
+          <!-- Home Team -->
+          <div class="scoreboard-team active" id="score-team-a-block">
+            <span class="team-cap-badge" id="badge-team-a"></span>
+            <span class="team-name-disp" id="disp-team-a-name">Gonaldo FC</span>
+            <span class="team-score-disp" id="disp-team-a-score">0</span>
+          </div>
+          <!-- Divider -->
+          <div class="scoreboard-center">
+            <div class="vs-text">vs</div>
+            <div class="turn-bubble" id="turn-bubble">YOUR TURN</div>
+          </div>
+          <!-- Away Team -->
+          <div class="scoreboard-team" id="score-team-b-block">
+            <span class="team-score-disp" id="disp-team-b-score">0</span>
+            <span class="team-name-disp" id="disp-team-b-name">Robo Madrid</span>
+            <span class="team-cap-badge" id="badge-team-b"></span>
+          </div>
+        </div>
+
+        <!-- Canvas Game Arena Wrapper -->
+        <div class="pitch-container glass-card">
+          <!-- Playing Field Canvas -->
+          <canvas id="pitch-canvas" width="800" height="500"></canvas>
+          
+          <!-- GOAL CELEBRATION OVERLAY -->
+          <div class="goal-overlay hidden" id="goal-overlay">
+            <div class="goal-announcement">
+              <h2 class="goal-text">GOAL!</h2>
+              <p class="scorer-name" id="goal-scorer-disp">Gonaldo FC scored</p>
+            </div>
+          </div>
+
+          <!-- END MATCH OVERLAY -->
+          <div class="end-overlay hidden" id="end-overlay">
+            <div class="end-card">
+              <i data-lucide="crown" class="winner-crown"></i>
+              <h2 class="winner-title" id="winner-name-disp">Gonaldo FC Wins!</h2>
+              <p class="winner-subtitle">Congratulations to the champions</p>
+              <button type="button" class="btn-primary" id="rematch-btn">
+                <i data-lucide="rotate-ccw"></i>
+                <span>Rematch</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls & Instructions footer -->
+        <div class="game-controls">
+          <button type="button" id="back-btn" class="btn-secondary">
+            <i data-lucide="arrow-left"></i>
+            <span>Exit</span>
+          </button>
+          
+          <div class="instruction-tip">
+            <i data-lucide="info"></i>
+            <span>Drag backward on your cap to aim. Release to flick!</span>
+          </div>
+          
+          <button type="button" id="reset-match-btn" class="btn-secondary">
+            <i data-lucide="rotate-ccw"></i>
+            <span>Reset</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 Gonaldo Finger Football. Premium physics simulation & audio synthesis.</p>
+    </footer>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
